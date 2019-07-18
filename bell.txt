@@ -1,0 +1,70 @@
+% Angular Geometric Violation Region Graphic
+% For Bell type inequality
+% Marcus Trinder 2015
+N=30; %axis segments
+for i=1:N
+ for j=1:N
+ for k=1:N
+ P(i,j,k)=(cos(i*(2*pi()/N))).^2 +(cos(j*(2*pi()/N))).^2 -
+(cos(k*(2*pi()/N))).^2; %calculates bell inequality for all angles
+ end
+ end
+end
+
+for i=1:N
+ for j=1:N
+ for k=1:N
+ if P(i,j,k)<=1 %checks whether violated
+ P(i,j,k)=1;
+ else
+ P(i,j,k)=-1;
+ end
+ end
+ end
+end
+
+
+for i=1:N
+ for j=1:N
+ for k=1:N
+ D=((360/N)*i)+((360/N)*j)+((360/N)*k);
+ if D<=360
+ P(i,j,k)=P(i,j,k);
+ else
+ P(i,j,k)=0;
+ end
+ end
+ end
+end
+
+
+ P2=P;
+
+for i=1:N
+ for j=1:N
+ for k=1:N
+ if P(i,j,k)==1
+ P2(i,j,k)=1;
+ else if P(i,j,k)==0;
+
+ P2(i,j,k)=0.001;
+ else
+ P2(i,j,k)=4;
+ end
+ end
+ end
+ end
+end
+[x,y,z] = meshgrid(1:N,1:N,1:N);
+
+scatter3(x(:),y(:),z(:), 75*P2(:), P(:), 'filled');
+ 
+
+
+ map = [0, 0.3, 0.3
+ 0, 0.4, 0.4
+ 0, 0.5, 0.5
+ 0, 0.6, 0.6
+ 0, 0.8, 0.8
+ 0, 1, 1.0];
+colormap(map)
